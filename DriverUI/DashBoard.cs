@@ -228,9 +228,10 @@ namespace DriverUI
         private void gridView2_RowDeleting(object sender, DevExpress.Data.RowDeletingEventArgs e)
         {
             SQLDataClassesDataContext db = new SQLDataClassesDataContext();
-            db.TODOs.DeleteOnSubmit((e.Row as TODO));
-            db.JOBs.DeleteOnSubmit((e.Row as TODO).JOB);
+            db.TODOs.DeleteOnSubmit((db.TODOs.Single(x => x.Id == (e.Row as TODO).Id)));
+            db.JOBs.DeleteOnSubmit((db.JOBs.Single(x => x.Id == (e.Row as TODO).JOB.Id)));
             db.SubmitChanges();
+
 
         }
         #endregion
