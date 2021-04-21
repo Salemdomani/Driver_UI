@@ -14,12 +14,13 @@ namespace DriverUI
     {
         private TcpListener _server;
         DashBoard form;
-        public List<Thread> clients;
+        public bool isRunning = true;
 
         class HelloMessage{
+
             public int vms;
             public bool isBusy;
-
+            
             public HelloMessage(int vms,bool isBusy)
             {
                 this.vms = vms;
@@ -37,7 +38,6 @@ namespace DriverUI
 
         public TcpServer(int port,DashBoard form)
         {
-            clients = new List<Thread>();
             this.form = form;
             _server = new TcpListener(IPAddress.Any, port);
         }
@@ -45,11 +45,10 @@ namespace DriverUI
         public void StartListening()
         {
             _server.Start();
-            while (true)
+            while (isRunning)
             {
                 TcpClient newClient = _server.AcceptTcpClient();
                 Thread t = new Thread(new ParameterizedThreadStart(HandleClient));
-                clients.Add(t);
                 t.Start(newClient as TcpClient);
             }
         }
@@ -61,7 +60,7 @@ namespace DriverUI
             //StreamWriter sWriter = new StreamWriter(client.GetStream(), Encoding.ASCII);
             StreamReader sReader = new StreamReader(client.GetStream(), Encoding.ASCII);
 
-            while (true)
+            while (isRunning)
             {
                 try
                 {

@@ -261,7 +261,7 @@ namespace DriverUI
 
         private void DashBoard_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
+            server.isRunning = false;
         }
     }
 }
