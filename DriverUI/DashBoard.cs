@@ -118,14 +118,16 @@ namespace DriverUI
                 try
                 {
                     SQLDataClassesDataContext db = new SQLDataClassesDataContext();
+                    string respond = "";
                     foreach (var vm in db.Vms.Where(v => v.Status == "READY"))
                     {
                         try
                         {
-                            MessageBox.Show(Client.SendAsync(vm.IP, 11000, "Start").Result);
+                            respond += Client.SendAsync(vm.IP, 11000, "Start").Result + "\n";
                         }
-                        catch (Exception) { MessageBox.Show("vm \"" + vm.Id + "\" failed to start"); }
+                        catch (Exception) { respond+="vm \"" + vm.Id + "\" failed to start\n"; }
                     }
+                    MessageBox.Show(respond);
                 }
                 catch (Exception ex){Console.WriteLine(ex.Message);}
                 
@@ -149,14 +151,16 @@ namespace DriverUI
                 try
                 {
                     SQLDataClassesDataContext db = new SQLDataClassesDataContext();
+                    string respond="";
                     foreach (var vm in db.Vms.Where(v => v.Status == "READY"))
                     {
                         try
                         {
-                            MessageBox.Show(Client.SendAsync(vm.IP, 11000, "Stop").Result);
+                            respond +=Client.SendAsync(vm.IP, 11000, "Stop").Result+"\n";
                         }
-                        catch (Exception) { MessageBox.Show("vm \"" + vm.Id + "\" failed to stop"); }
+                        catch (Exception) { respond += "vm \"" + vm.Id + "\" failed to stop\n"; }
                     }
+                    MessageBox.Show(respond);
                 }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
