@@ -198,12 +198,12 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 29);
+            this.label1.Location = new System.Drawing.Point(52, 29);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 17);
+            this.label1.Size = new System.Drawing.Size(37, 17);
             this.label1.TabIndex = 10;
-            this.label1.Text = "VMS_Num";
+            this.label1.Text = "VMS";
             // 
             // groupBox2
             // 

@@ -22,6 +22,7 @@ namespace DriverUI
             server = new TcpServer(12000,this);
         }
 
+        #region Form Events
         private void DashBoard_Load(object sender, EventArgs e)
         {
             SQLDataClassesDataContext db = new SQLDataClassesDataContext();
@@ -32,6 +33,35 @@ namespace DriverUI
             Worker.RunWorkerAsync();
         }
 
+        private void DashBoard_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            server.isRunning = false;
+        }
+        private void IP_Box_Enter(object sender, EventArgs e)
+        {
+            IP_Box.Text = VMS_Name_Box.Text == "" ? "" : "172.16.0." + VMS_Name_Box.Text;
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            SQLDataClassesDataContext db = new SQLDataClassesDataContext();
+            var file = new OpenFileDialog() { Title = "import Accounts", Filter = "Excel Files (*.xlsx)|*.xlsx|All files (*.*)|*.*" };
+            file.ShowDialog();
+            var excelData = new ExcelQueryFactory(file.FileName);
+            var data = from x in excelData.Worksheet<Account>("Sheet1")
+                       select x;
+            try
+            {
+                AccountGridControl.DataSource = data;
+                db.Accounts.InsertAllOnSubmit(data);
+                db.SubmitChanges();
+                MessageBox.Show("Data imported Successfully..!", "Nice", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Something Went Wrong..!", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+        #endregion
+
+        #region Worker and Timer
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             server.StartListening();
@@ -44,6 +74,7 @@ namespace DriverUI
             lookUpEdit.Properties.DataSource = VMSGridControl.DataSource = db.Vms.Where(x => true);
 
         }
+        #endregion
 
         #region Metods
         public void addlog(string text)
@@ -81,31 +112,61 @@ namespace DriverUI
 
         private void StartVMBtn_Click(object sender, EventArgs e)
         {
-            if (IP_Box.Text == "")
-                return;
-            try
+            if (IP_Box.Text == "") return;
+            if (VMS_Name_Box.Text == "All")
             {
-                var respond = Client.Send(IP_Box.Text, 11000, "Start");
-                MessageBox.Show(respond, "Nice");
+                try
+                {
+                    SQLDataClassesDataContext db = new SQLDataClassesDataContext();
+                    foreach (var vm in db.Vms.Where(v => v.Status == "READY"))
+                    {
+                        try
+                        {
+                            MessageBox.Show(Client.SendAsync(vm.IP, 11000, "Start").Result);
+                        }
+                        catch (Exception) { MessageBox.Show("vm \"" + vm.Id + "\" failed to start"); }
+                    }
+                }
+                catch (Exception ex){Console.WriteLine(ex.Message);}
+                
             }
-            catch (Exception)
+            else
             {
-                MessageBox.Show("Something Went Wrong");
+                try
+                {
+                    MessageBox.Show(Client.SendAsync(IP_Box.Text, 11000, "Start").Result);
+                }
+                catch (Exception) { MessageBox.Show("Failed to start"); }
             }
+            
         }
 
         private void StopVMBtn_Click(object sender, EventArgs e)
         {
-            if (IP_Box.Text == "")
-                return;
-            try
+            if (IP_Box.Text == "") return;
+            if (VMS_Name_Box.Text == "All")
             {
-                var respond = Client.Send(IP_Box.Text, 11000, "Stop");
-                MessageBox.Show(respond, "Nice");
+                try
+                {
+                    SQLDataClassesDataContext db = new SQLDataClassesDataContext();
+                    foreach (var vm in db.Vms.Where(v => v.Status == "READY"))
+                    {
+                        try
+                        {
+                            MessageBox.Show(Client.SendAsync(vm.IP, 11000, "Stop").Result);
+                        }
+                        catch (Exception) { MessageBox.Show("vm \"" + vm.Id + "\" failed to stop"); }
+                    }
+                }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
-            catch (Exception)
+            else
             {
-                MessageBox.Show("Something Went Wrong");
+                try
+                {
+                    MessageBox.Show(Client.SendAsync(IP_Box.Text, 11000, "Stop").Result);
+                }
+                catch (Exception){MessageBox.Show("Failed to stop");}
             }
         }
         
@@ -236,32 +297,6 @@ namespace DriverUI
         }
         #endregion
 
-        private void IP_Box_Enter(object sender, EventArgs e)
-        {
-            IP_Box.Text = VMS_Name_Box.Text == "" ? "" : "172.16.0." + VMS_Name_Box.Text;
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-            SQLDataClassesDataContext db = new SQLDataClassesDataContext();
-            var file = new OpenFileDialog() { Title = "import Accounts", Filter = "Excel Files (*.xlsx)|*.xlsx|All files (*.*)|*.*" };
-            file.ShowDialog();
-            var excelData = new ExcelQueryFactory(file.FileName);
-            var data = from x in excelData.Worksheet<Account>("Sheet1")
-                       select x;
-            try
-            {
-                AccountGridControl.DataSource = data;
-                db.Accounts.InsertAllOnSubmit(data);
-                db.SubmitChanges();
-                MessageBox.Show("Data imported Successfully..!", "Nice", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message, "Something Went Wrong..!", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-        }
-
-        private void DashBoard_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            server.isRunning = false;
-        }
+        
     }
 }
