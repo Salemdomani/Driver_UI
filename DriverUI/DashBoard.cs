@@ -259,6 +259,9 @@ namespace DriverUI
             catch (Exception ex) { MessageBox.Show(ex.Message, "Something Went Wrong..!", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-      
+        private void DashBoard_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+        }
     }
 }

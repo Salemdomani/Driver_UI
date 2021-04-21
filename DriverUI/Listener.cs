@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -13,6 +14,7 @@ namespace DriverUI
     {
         private TcpListener _server;
         DashBoard form;
+        public List<Thread> clients;
 
         class HelloMessage{
             public int vms;
@@ -35,6 +37,7 @@ namespace DriverUI
 
         public TcpServer(int port,DashBoard form)
         {
+            clients = new List<Thread>();
             this.form = form;
             _server = new TcpListener(IPAddress.Any, port);
         }
@@ -46,6 +49,7 @@ namespace DriverUI
             {
                 TcpClient newClient = _server.AcceptTcpClient();
                 Thread t = new Thread(new ParameterizedThreadStart(HandleClient));
+                clients.Add(t);
                 t.Start(newClient as TcpClient);
             }
         }

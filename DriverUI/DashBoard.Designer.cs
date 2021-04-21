@@ -52,6 +52,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.Action_Box = new DevExpress.XtraEditors.ComboBoxEdit();
             this.Post_Id_Box = new System.Windows.Forms.TextBox();
             this.Text_Box = new System.Windows.Forms.TextBox();
             this.VMS_Number_Box = new System.Windows.Forms.TextBox();
@@ -90,11 +91,11 @@
             this.colVMS1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.xtraTabPage4 = new DevExpress.XtraTab.XtraTabPage();
             this.logListBox = new System.Windows.Forms.ListBox();
-            this.Action_Box = new DevExpress.XtraEditors.ComboBoxEdit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lookUpEdit.Properties)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Action_Box.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xtraTabPage1.SuspendLayout();
@@ -109,7 +110,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.AccountGridControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView4)).BeginInit();
             this.xtraTabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Action_Box.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // timer
@@ -353,6 +353,20 @@
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Add_Job";
+            // 
+            // Action_Box
+            // 
+            this.Action_Box.Location = new System.Drawing.Point(96, 95);
+            this.Action_Box.Name = "Action_Box";
+            this.Action_Box.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.Action_Box.Properties.Items.AddRange(new object[] {
+            "like",
+            "comment",
+            "share",
+            "ShrToGroub"});
+            this.Action_Box.Size = new System.Drawing.Size(268, 22);
+            this.Action_Box.TabIndex = 17;
             // 
             // Post_Id_Box
             // 
@@ -731,20 +745,6 @@
             this.logListBox.Size = new System.Drawing.Size(690, 556);
             this.logListBox.TabIndex = 0;
             // 
-            // Action_Box
-            // 
-            this.Action_Box.Location = new System.Drawing.Point(96, 95);
-            this.Action_Box.Name = "Action_Box";
-            this.Action_Box.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.Action_Box.Properties.Items.AddRange(new object[] {
-            "like",
-            "comment",
-            "share",
-            "ShrToGroub"});
-            this.Action_Box.Size = new System.Drawing.Size(268, 22);
-            this.Action_Box.TabIndex = 17;
-            // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -757,6 +757,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DashBoard";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DashBoard_FormClosing);
             this.Load += new System.EventHandler(this.DashBoard_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -765,6 +766,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.lookUpEdit.Properties)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Action_Box.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
             this.xtraTabControl1.ResumeLayout(false);
             this.xtraTabPage1.ResumeLayout(false);
@@ -779,7 +781,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.AccountGridControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView4)).EndInit();
             this.xtraTabPage4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Action_Box.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
