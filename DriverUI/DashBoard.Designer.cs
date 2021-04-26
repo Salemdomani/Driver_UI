@@ -179,6 +179,10 @@
             // 
             // VMS_Name_Box
             // 
+            this.VMS_Name_Box.AutoCompleteCustomSource.AddRange(new string[] {
+            "All"});
+            this.VMS_Name_Box.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.VMS_Name_Box.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.VMS_Name_Box.Location = new System.Drawing.Point(97, 26);
             this.VMS_Name_Box.Margin = new System.Windows.Forms.Padding(4);
             this.VMS_Name_Box.Name = "VMS_Name_Box";
@@ -362,6 +366,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.Action_Box.Properties.Items.AddRange(new object[] {
             "like",
+            "unlike",
             "comment",
             "share",
             "ShrToGroub"});
@@ -386,6 +391,10 @@
             // 
             // VMS_Number_Box
             // 
+            this.VMS_Number_Box.AutoCompleteCustomSource.AddRange(new string[] {
+            "All"});
+            this.VMS_Number_Box.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.VMS_Number_Box.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.VMS_Number_Box.Location = new System.Drawing.Point(97, 26);
             this.VMS_Number_Box.Margin = new System.Windows.Forms.Padding(4);
             this.VMS_Number_Box.Name = "VMS_Number_Box";

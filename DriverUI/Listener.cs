@@ -14,7 +14,7 @@ namespace DriverUI
     {
         private TcpListener _server;
         DashBoard form;
-        public bool isRunning = true;
+        bool isRunning = true;
 
         class HelloMessage{
 
@@ -89,6 +89,17 @@ namespace DriverUI
             else
                 db.Vms.SingleOrDefault(v => v.Id == helo.vms).Status = "READY";
             db.SubmitChanges();
+        }
+
+        public void StopListening()
+        {
+            try
+            {
+                isRunning = false;
+                _server.Stop();
+            }
+            catch (Exception e) { Console.WriteLine(e); }
+           
         }
     }
 }

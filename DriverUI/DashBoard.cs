@@ -35,7 +35,7 @@ namespace DriverUI
 
         private void DashBoard_FormClosing(object sender, FormClosingEventArgs e)
         {
-            server.isRunning = false;
+            server.StopListening();
         }
         private void IP_Box_Enter(object sender, EventArgs e)
         {
@@ -72,6 +72,9 @@ namespace DriverUI
         {
             SQLDataClassesDataContext db = new SQLDataClassesDataContext();
             lookUpEdit.Properties.DataSource = VMSGridControl.DataSource = db.Vms.Where(x => true);
+            JobGridControl.DataSource = db.JOBs.Where(x => true);
+            TodosGridControl.DataSource = db.TODOs.Where(x => true);
+            AccountGridControl.DataSource = db.Accounts.Where(x => true);
 
         }
         #endregion
