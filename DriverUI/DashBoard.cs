@@ -123,7 +123,7 @@ namespace DriverUI
                     {
                         try
                         {
-                            respond += Client.SendAsync(vm.IP, 11000, "Start").Result + "\n";
+                            respond += Client.Send(vm.IP, 11000, "Start") + "\n";
                         }
                         catch (Exception) { respond+="vm \"" + vm.Id + "\" failed to start\n"; }
                     }
@@ -136,7 +136,7 @@ namespace DriverUI
             {
                 try
                 {
-                    MessageBox.Show(Client.SendAsync(IP_Box.Text, 11000, "Start").Result);
+                    MessageBox.Show(Client.Send(IP_Box.Text, 11000, "Start"));
                 }
                 catch (Exception) { MessageBox.Show("Failed to start"); }
             }
@@ -156,7 +156,7 @@ namespace DriverUI
                     {
                         try
                         {
-                            respond +=Client.SendAsync(vm.IP, 11000, "Stop").Result+"\n";
+                            respond +=Client.Send(vm.IP, 11000, "Stop")+"\n";
                         }
                         catch (Exception) { respond += "vm \"" + vm.Id + "\" failed to stop\n"; }
                     }
@@ -168,7 +168,7 @@ namespace DriverUI
             {
                 try
                 {
-                    MessageBox.Show(Client.SendAsync(IP_Box.Text, 11000, "Stop").Result);
+                    MessageBox.Show(Client.Send(IP_Box.Text, 11000, "Stop"));
                 }
                 catch (Exception){MessageBox.Show("Failed to stop");}
             }
