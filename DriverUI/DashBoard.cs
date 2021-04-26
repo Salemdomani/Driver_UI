@@ -112,7 +112,6 @@ namespace DriverUI
 
         private void StartVMBtn_Click(object sender, EventArgs e)
         {
-            if (IP_Box.Text == "") return;
             if (VMS_Name_Box.Text == "All")
             {
                 try
@@ -132,7 +131,7 @@ namespace DriverUI
                 catch (Exception ex){Console.WriteLine(ex.Message);}
                 
             }
-            else
+            else if(VMS_Name_Box.Text!=""&&IP_Box.Text!="")
             {
                 try
                 {
