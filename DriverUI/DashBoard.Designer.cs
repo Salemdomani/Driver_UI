@@ -33,8 +33,6 @@
             this.Worker = new System.ComponentModel.BackgroundWorker();
             this.AddVmsBtn = new DevExpress.XtraEditors.SimpleButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.StopVMBtn = new DevExpress.XtraEditors.SimpleButton();
-            this.StartVMBtn = new DevExpress.XtraEditors.SimpleButton();
             this.IP_Box = new System.Windows.Forms.TextBox();
             this.VMS_Name_Box = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -66,7 +64,11 @@
             this.VMSGridControl = new DevExpress.XtraGrid.GridControl();
             this.VMScontextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.StartMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startThisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StopMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopThisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colIP = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -138,8 +140,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.StopVMBtn);
-            this.groupBox1.Controls.Add(this.StartVMBtn);
             this.groupBox1.Controls.Add(this.IP_Box);
             this.groupBox1.Controls.Add(this.VMS_Name_Box);
             this.groupBox1.Controls.Add(this.label2);
@@ -153,24 +153,6 @@
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ADD_VM";
-            // 
-            // StopVMBtn
-            // 
-            this.StopVMBtn.Location = new System.Drawing.Point(164, 86);
-            this.StopVMBtn.Name = "StopVMBtn";
-            this.StopVMBtn.Size = new System.Drawing.Size(94, 29);
-            this.StopVMBtn.TabIndex = 11;
-            this.StopVMBtn.Text = "Stop";
-            this.StopVMBtn.Click += new System.EventHandler(this.StopVMBtn_Click);
-            // 
-            // StartVMBtn
-            // 
-            this.StartVMBtn.Location = new System.Drawing.Point(64, 86);
-            this.StartVMBtn.Name = "StartVMBtn";
-            this.StartVMBtn.Size = new System.Drawing.Size(94, 29);
-            this.StartVMBtn.TabIndex = 11;
-            this.StartVMBtn.Text = "Start";
-            this.StartVMBtn.Click += new System.EventHandler(this.StartVMBtn_Click);
             // 
             // IP_Box
             // 
@@ -375,7 +357,7 @@
             "share",
             "ShrToGroub"});
             this.Action_Box.Size = new System.Drawing.Size(268, 22);
-            this.Action_Box.TabIndex = 17;
+            this.Action_Box.TabIndex = 11;
             // 
             // Post_Id_Box
             // 
@@ -498,20 +480,53 @@
             this.StartMenuItem,
             this.StopMenuItem});
             this.VMScontextMenuStrip.Name = "VMScontextMenuStrip";
-            this.VMScontextMenuStrip.Size = new System.Drawing.Size(176, 80);
-            this.VMScontextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.VMScontextMenuStrip_ItemClicked);
+            this.VMScontextMenuStrip.Size = new System.Drawing.Size(110, 52);
             // 
             // StartMenuItem
             // 
+            this.StartMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startThisToolStripMenuItem,
+            this.startAllToolStripMenuItem});
             this.StartMenuItem.Name = "StartMenuItem";
-            this.StartMenuItem.Size = new System.Drawing.Size(175, 24);
+            this.StartMenuItem.Size = new System.Drawing.Size(109, 24);
             this.StartMenuItem.Text = "Start";
+            // 
+            // startThisToolStripMenuItem
+            // 
+            this.startThisToolStripMenuItem.Name = "startThisToolStripMenuItem";
+            this.startThisToolStripMenuItem.Size = new System.Drawing.Size(142, 26);
+            this.startThisToolStripMenuItem.Text = "Start this";
+            this.startThisToolStripMenuItem.Click += new System.EventHandler(this.startThisToolStripMenuItem_Click);
+            // 
+            // startAllToolStripMenuItem
+            // 
+            this.startAllToolStripMenuItem.Name = "startAllToolStripMenuItem";
+            this.startAllToolStripMenuItem.Size = new System.Drawing.Size(142, 26);
+            this.startAllToolStripMenuItem.Text = "Start All";
+            this.startAllToolStripMenuItem.Click += new System.EventHandler(this.startAllToolStripMenuItem_Click);
             // 
             // StopMenuItem
             // 
+            this.StopMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stopThisToolStripMenuItem,
+            this.stopAllToolStripMenuItem});
             this.StopMenuItem.Name = "StopMenuItem";
-            this.StopMenuItem.Size = new System.Drawing.Size(175, 24);
+            this.StopMenuItem.Size = new System.Drawing.Size(109, 24);
             this.StopMenuItem.Text = "Stop";
+            // 
+            // stopThisToolStripMenuItem
+            // 
+            this.stopThisToolStripMenuItem.Name = "stopThisToolStripMenuItem";
+            this.stopThisToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.stopThisToolStripMenuItem.Text = "Stop this";
+            this.stopThisToolStripMenuItem.Click += new System.EventHandler(this.stopThisToolStripMenuItem_Click);
+            // 
+            // stopAllToolStripMenuItem
+            // 
+            this.stopAllToolStripMenuItem.Name = "stopAllToolStripMenuItem";
+            this.stopAllToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.stopAllToolStripMenuItem.Text = "Stop All";
+            this.stopAllToolStripMenuItem.Click += new System.EventHandler(this.stopAllToolStripMenuItem_Click);
             // 
             // gridView1
             // 
@@ -880,14 +895,16 @@
         private DevExpress.XtraGrid.Columns.GridColumn colStatus1;
         private DevExpress.XtraGrid.Columns.GridColumn colUsername;
         private DevExpress.XtraGrid.Columns.GridColumn colVMS1;
-        private DevExpress.XtraEditors.SimpleButton StopVMBtn;
-        private DevExpress.XtraEditors.SimpleButton StartVMBtn;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage4;
         private System.Windows.Forms.ListBox logListBox;
         private DevExpress.XtraEditors.ComboBoxEdit Action_Box;
         private System.Windows.Forms.ContextMenuStrip VMScontextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem StartMenuItem;
         private System.Windows.Forms.ToolStripMenuItem StopMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startThisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopThisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopAllToolStripMenuItem;
     }
 }
 

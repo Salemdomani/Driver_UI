@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LinqToExcel.Extensions;
 
 namespace DriverUI
 {
@@ -39,7 +40,8 @@ namespace DriverUI
         }
         private void IP_Box_Enter(object sender, EventArgs e)
         {
-            IP_Box.Text = VMS_Name_Box.Text == "" ? "" : "172.16.0." + VMS_Name_Box.Text;
+            if(VMS_Name_Box.Text!="All")
+                IP_Box.Text = VMS_Name_Box.Text == "" ? "" : "172.16.0." + VMS_Name_Box.Text;
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -125,7 +127,7 @@ namespace DriverUI
                     {
                         try
                         {
-                            respond += Client.Send(vm.IP, 11000, "Start") + "\n";
+                            respond += Client.SendAsync(vm.IP, 11000, "Start").Result + "\n";
                         }
                         catch (Exception) { respond+="vm \"" + vm.Id + "\" failed to start\n"; }
                     }
@@ -138,7 +140,7 @@ namespace DriverUI
             {
                 try
                 {
-                    MessageBox.Show(Client.Send(IP_Box.Text, 11000, "Start"));
+                    MessageBox.Show(Client.SendAsync(IP_Box.Text, 11000, "Start").Result);
                 }
                 catch (Exception) { MessageBox.Show("Failed to start"); }
             }
@@ -158,7 +160,7 @@ namespace DriverUI
                     {
                         try
                         {
-                            respond +=Client.Send(vm.IP, 11000, "Stop")+"\n";
+                            respond +=Client.SendAsync(vm.IP, 11000, "Stop").Result+"\n";
                         }
                         catch (Exception) { respond += "vm \"" + vm.Id + "\" failed to stop\n"; }
                     }
@@ -170,7 +172,7 @@ namespace DriverUI
             {
                 try
                 {
-                    MessageBox.Show(Client.Send(IP_Box.Text, 11000, "Stop"));
+                    MessageBox.Show(Client.SendAsync(IP_Box.Text, 11000, "Stop").Result);
                 }
                 catch (Exception){MessageBox.Show("Failed to stop");}
             }
@@ -301,21 +303,65 @@ namespace DriverUI
 
 
         }
-
         #endregion
 
-        private void VMScontextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        #region MenuStrip
+
+        private async void startAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            switch (e.ClickedItem.Text)
+            try
             {
-                case "Start":
-                    Console.WriteLine("start");
-                    break;
-                case "Stop":
-                    Console.WriteLine("stop");
-                    break;
+                SQLDataClassesDataContext db = new SQLDataClassesDataContext();
+                string respond = "";
+                foreach (var vm in db.Vms.Where(v => v.Status == "READY"))
+                {
+                    try
+                    {
+                        respond += await Client.SendAsync(vm.IP, 11000, "Start") + "\n";
+                    }
+                    catch (Exception) { respond += "vm \"" + vm.Id + "\" failed to start\n"; }
+                }
+                MessageBox.Show(respond);
             }
-            
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+        }
+
+        private async void stopAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SQLDataClassesDataContext db = new SQLDataClassesDataContext();
+                string respond = "";
+                foreach (var vm in db.Vms.Where(v => v.Status == "READY"))
+                {
+                    try
+                    {
+                        respond += await Client.SendAsync(vm.IP, 11000, "Stop") + "\n";
+                    }
+                    catch (Exception) { respond += "vm \"" + vm.Id + "\" failed to stop\n"; }
+                }
+                MessageBox.Show(respond);
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+        }
+
+        private async void startThisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MessageBox.Show(await Client.SendAsync((gridView1.GetRow(gridView1.FocusedRowHandle).Cast<Vm>().IP), 11000, "Start"));
+            }
+            catch (Exception) { MessageBox.Show("Failed to start"); }
+        }
+
+        private async void stopThisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MessageBox.Show(await Client.SendAsync((gridView1.GetRow(gridView1.FocusedRowHandle).Cast<Vm>().IP), 11000, "Stop"));
+            }
+            catch (Exception) { MessageBox.Show("Failed to stop"); }
         }
     }
+    #endregion
 }

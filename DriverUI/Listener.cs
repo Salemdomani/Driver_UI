@@ -15,7 +15,7 @@ namespace DriverUI
         private TcpListener _server;
         DashBoard form;
         bool isRunning = true;
-
+        private List<Thread> runningThreads = new List<Thread>();
         class HelloMessage{
 
             public int vms;
@@ -47,9 +47,18 @@ namespace DriverUI
             _server.Start();
             while (isRunning)
             {
-                TcpClient newClient = _server.AcceptTcpClient();
-                Thread t = new Thread(new ParameterizedThreadStart(HandleClient));
-                t.Start(newClient);
+                try
+                {
+                    TcpClient newClient = _server.AcceptTcpClient();
+                    Thread t = new Thread(new ParameterizedThreadStart(HandleClient));
+                    runningThreads.Add(t);
+                    t.Start(newClient);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+               
             }
         }
 
@@ -64,7 +73,7 @@ namespace DriverUI
             {
                 try
                 {
-                    var sData = sReader.ReadLine();
+                    var sData = sReader.ReadLineAsync().Result;
                     if (sData.Contains("Hi"))
                         validateHelloMessage(sData);
                     else
@@ -97,8 +106,11 @@ namespace DriverUI
             {
                 isRunning = false;
                 _server.Stop();
+                foreach (var thread in runningThreads)
+                    thread.Abort();
+                
             }
-            catch (Exception e) { Console.WriteLine(e); }
+            catch (Exception e) { Console.WriteLine(e.Message); }
            
         }
     }

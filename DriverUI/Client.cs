@@ -10,7 +10,7 @@ namespace DriverUI
 {
     public class Client
     {
-      public static string Send(string ipAddress, int port, string data)
+      public static async Task<string> SendAsync(string ipAddress, int port, string data)
         {
             try
             {
@@ -18,9 +18,11 @@ namespace DriverUI
                 client.Connect(ipAddress, port);
                 var sWriter = new StreamWriter(client.GetStream(), Encoding.ASCII);
                 var sReader = new StreamReader(client.GetStream(), Encoding.ASCII);
-                sWriter.WriteLine(data);
+                sWriter.WriteLineAsync(data);
                 sWriter.Flush();
-                return sReader.ReadLineAsync().Result;
+                var respond = await sReader.ReadLineAsync();
+                client.Close();
+                return respond;
             }
             catch (Exception ex)
             {
