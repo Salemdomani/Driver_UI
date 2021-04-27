@@ -74,6 +74,7 @@ namespace DriverUI
                 try
                 {
                     var sData = sReader.ReadLineAsync().Result;
+                    //Console.WriteLine(sData);
                     if (sData.Contains("Hi"))
                         validateHelloMessage(sData);
                     else
