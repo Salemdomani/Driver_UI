@@ -49,7 +49,7 @@ namespace DriverUI
             {
                 TcpClient newClient = _server.AcceptTcpClient();
                 Thread t = new Thread(new ParameterizedThreadStart(HandleClient));
-                t.Start(newClient as TcpClient);
+                t.Start(newClient);
             }
         }
 

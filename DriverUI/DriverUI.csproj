@@ -98,7 +98,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsynchronousSocketListener.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Listener.cs" />
     <Compile Include="SQLDataClasses.designer.cs">
@@ -106,7 +105,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SQLDataClasses.dbml</DependentUpon>
     </Compile>
-    <Compile Include="SynchronousSocketListener.cs" />
     <Compile Include="DashBoard.cs">
       <SubType>Form</SubType>
     </Compile>

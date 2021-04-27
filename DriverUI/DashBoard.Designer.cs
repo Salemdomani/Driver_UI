@@ -64,6 +64,9 @@
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
             this.VMSGridControl = new DevExpress.XtraGrid.GridControl();
+            this.VMScontextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.StartMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.StopMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colIP = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -100,6 +103,7 @@
             this.xtraTabControl1.SuspendLayout();
             this.xtraTabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VMSGridControl)).BeginInit();
+            this.VMScontextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.xtraTabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.JobGridControl)).BeginInit();
@@ -474,6 +478,7 @@
             // 
             // VMSGridControl
             // 
+            this.VMSGridControl.ContextMenuStrip = this.VMScontextMenuStrip;
             this.VMSGridControl.DataSource = typeof(DriverUI.Vm);
             this.VMSGridControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VMSGridControl.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4);
@@ -485,6 +490,28 @@
             this.VMSGridControl.TabIndex = 16;
             this.VMSGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
+            // 
+            // VMScontextMenuStrip
+            // 
+            this.VMScontextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.VMScontextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StartMenuItem,
+            this.StopMenuItem});
+            this.VMScontextMenuStrip.Name = "VMScontextMenuStrip";
+            this.VMScontextMenuStrip.Size = new System.Drawing.Size(176, 80);
+            this.VMScontextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.VMScontextMenuStrip_ItemClicked);
+            // 
+            // StartMenuItem
+            // 
+            this.StartMenuItem.Name = "StartMenuItem";
+            this.StartMenuItem.Size = new System.Drawing.Size(175, 24);
+            this.StartMenuItem.Text = "Start";
+            // 
+            // StopMenuItem
+            // 
+            this.StopMenuItem.Name = "StopMenuItem";
+            this.StopMenuItem.Size = new System.Drawing.Size(175, 24);
+            this.StopMenuItem.Text = "Stop";
             // 
             // gridView1
             // 
@@ -780,6 +807,7 @@
             this.xtraTabControl1.ResumeLayout(false);
             this.xtraTabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.VMSGridControl)).EndInit();
+            this.VMScontextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             this.xtraTabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.JobGridControl)).EndInit();
@@ -857,6 +885,9 @@
         private DevExpress.XtraTab.XtraTabPage xtraTabPage4;
         private System.Windows.Forms.ListBox logListBox;
         private DevExpress.XtraEditors.ComboBoxEdit Action_Box;
+        private System.Windows.Forms.ContextMenuStrip VMScontextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem StartMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem StopMenuItem;
     }
 }
 

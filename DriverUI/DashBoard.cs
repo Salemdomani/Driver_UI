@@ -301,8 +301,21 @@ namespace DriverUI
 
 
         }
+
         #endregion
 
-        
+        private void VMScontextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            switch (e.ClickedItem.Text)
+            {
+                case "Start":
+                    Console.WriteLine("start");
+                    break;
+                case "Stop":
+                    Console.WriteLine("stop");
+                    break;
+            }
+            
+        }
     }
 }
