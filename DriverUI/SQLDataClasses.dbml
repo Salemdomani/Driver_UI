@@ -22,7 +22,7 @@
   </Table>
   <Table Name="dbo.JOBS" Member="JOBs">
     <Type Name="JOB">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="post_id" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="action" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
       <Column Name="text" Type="System.String" DbType="NChar(10)" CanBeNull="true" />

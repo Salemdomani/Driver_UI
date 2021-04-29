@@ -249,8 +249,9 @@ namespace DriverUI
                         JOB = job
 
                     };
-                    db.TODOs.InsertOnSubmit(todo);
                     db.JOBs.InsertOnSubmit(job);
+                    db.TODOs.InsertOnSubmit(todo);
+
                 }
                 
                 db.SubmitChanges();
